@@ -3,6 +3,7 @@
 
 import sys
 import pymysql
+import logging
 from passlib.apps import mysql_context
 from flask import Flask
 from flask_httpauth import HTTPBasicAuth
@@ -12,19 +13,24 @@ auth = HTTPBasicAuth()
 
 @auth.verify_password
 def cb_verify_password(username, password):
-    sql = "SELECT `id`, `password` FROM `users` WHERE `username`=%s"
+    if not username or not password:
+        return False
 
+    sql = "SELECT `id`, `password` FROM `users` WHERE `username`=%s"
     conn = pymysql.connect(host='127.0.0.1',
                            user='demo',
-                           user='9swCHjebrx',
+                           password='9swCHjebrx',
                            db='sample',
                            charset='utf8mb4',
                            cursorclass=pymysql.cursors.DictCursor)
 
     try:
-        with connection.cursor() as cursor:
+        with conn.cursor() as cursor:
             cursor.execute(sql, (username,))
             result = cursor.fetchone()
+        if not result:
+            logging.error("Result is null, no such user {0}".format(username))
+            return False
         return mysql_context.verify(password, result['password'])
     finally:
         conn.close()

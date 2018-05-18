@@ -1,7 +1,6 @@
 #!/bin/bash
 
-set -ex
-
+set -e
 echo "[Entrypoint] MySQL Docker Image 8.0.11-1.1.5"
 
 _get_config() {
@@ -122,10 +121,7 @@ EOF
     rm -f "$PASSFILE"
     unset PASSFILE
     echo "[Entrypoint] Server shut down"
-
-    echo
     echo '[Entrypoint] MySQL init process done. Ready for start up.'
-    echo
 fi
 
 
@@ -134,6 +130,5 @@ chown -R mysql:mysql "$DATADIR"
 echo "[Entrypoint] Starting MySQL 8.0.11-1.1.5"
 mysqld --daemonize
 waiting_mysqld
-
 
 python app.py
