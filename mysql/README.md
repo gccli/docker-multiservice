@@ -13,4 +13,6 @@ verify
 $ echo -n admin:123456|base64
 YWRtaW46MTIzNDU2
 $ curl -H 'Authorization: Basic YWRtaW46MTIzNDU2' -i http://localhost:8080/
+
+
 ```
