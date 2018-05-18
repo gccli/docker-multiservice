@@ -1,0 +1,6 @@
+setuptools
+wheel
+passlib
+Flask
+flask-httpauth
+pymysql
