@@ -1,10 +1,11 @@
 #!/bin/bash
 
 echo $#
-echo $@
-
-if [ $# -gt 1 -a "$0" == "/usr/bin/supervisord" ]; then
+echo $0
+if [ $# -gt 1 -a "$0" = "/usr/bin/supervisord" ]; then
+    echo "run postconf"
     postconf -e mydomain=$mydomain
+    echo $?
     postconf -e "mydestination = localhost, localhost.$mydomain, $myhostname, $mydomain"
     postconf -e 'smtpd_sasl_type = dovecot'
     postconf -e 'smtpd_sasl_auth_enable = yes'
