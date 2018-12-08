@@ -2,7 +2,8 @@
 
 echo $#
 echo $0
-if [ $# -gt 1 -a "$0" = "/usr/bin/supervisord" ]; then
+echo $1
+if [ $# -gt 1 -a "$1" = "/usr/bin/supervisord" ]; then
     echo "run postconf"
     postconf -e mydomain=$mydomain
     echo $?
