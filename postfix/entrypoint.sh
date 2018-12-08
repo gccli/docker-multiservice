@@ -1,3 +1,16 @@
-#!/bin/bash -x
+#!/bin/bash
+
+echo $#
+echo $@
+
+if [ $# -gt 1 -a "$0" == "/usr/bin/supervisord" ]; then
+    postconf -e mydomain=$mydomain
+    postconf -e "mydestination = localhost, localhost.$mydomain, $myhostname, $mydomain"
+    postconf -e 'smtpd_sasl_type = dovecot'
+    postconf -e 'smtpd_sasl_auth_enable = yes'
+    postconf -e 'smtpd_recipient_restrictions = permit_sasl_authenticated,permit_mynetworks,reject_unauth_destination'
+    postconf -e 'smtpd_sasl_path = private/auth'
+    postconf -e message_size_limit=52428800
+fi
 
 exec "$@"
