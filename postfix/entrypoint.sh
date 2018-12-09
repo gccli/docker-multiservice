@@ -8,9 +8,8 @@ if [ $# -gt 1 -a "$1" = "/usr/bin/supervisord" ]; then
     ln -s /etc/pki/tls/certs/dovecot.pem /etc/dovecot/dovecot.pem
     ln -s /etc/pki/tls/private/dovecot.pem /etc/dovecot/private/dovecot.pem
 
-    echo "run postconf"
     postconf -e mydomain=$mydomain
-    echo $?
+    postconf -e myhostname=mail.$mydomain
     postconf -e 'inet_interfaces = all'
     postconf -e "mydestination = localhost, localhost.$mydomain, $myhostname, $mydomain"
     postconf -e 'smtpd_sasl_type = dovecot'
