@@ -2,8 +2,8 @@ build & run
 
 ```
 docker build -t inetlinux/mail .
-docker run --rm -v /home:/home -p 25:25 -p 465:465 -p 143:143 -p 993:993 -p 110:110 -p 995:995 --name mail inetlinux/mail
-
+# Using host syslog
+docker run --rm -v /dev/log:/dev/log -v /home:/home -p 25:25 -p 465:465 -p 143:143 -p 993:993 -p 110:110 -p 995:995 --name mail inetlinux/mail
 docker run --rm -v /home:/home -it inetlinux/mail /bin/bash
 
 
